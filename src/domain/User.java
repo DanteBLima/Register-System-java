@@ -6,18 +6,12 @@ public class User {
     private int age;
     private float height;
 
-    public User(String name, String email, int age, float height) {
-        this.name = name;
-        this.email = email;
-        this.age = age;
-        this.height = height;
-    }
 
     public String getName() {
         return name;
     }
 
-    private void setName(String name) {
+    public void setName(String name) {
         this.name = name;
     }
 
@@ -25,7 +19,7 @@ public class User {
         return email;
     }
 
-    private void setEmail(String email) {
+    public void setEmail(String email) {
         this.email = email;
     }
 
@@ -33,7 +27,7 @@ public class User {
         return age;
     }
 
-    private void setAge(int age) {
+    public void setAge(int age) {
         this.age = age;
     }
 
@@ -41,7 +35,7 @@ public class User {
         return height;
     }
 
-    private void setHeight(float height) {
+    public void setHeight(float height) {
         this.height = height;
     }
 }
