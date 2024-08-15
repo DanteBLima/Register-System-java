@@ -29,8 +29,11 @@ public class FormReader {
         }
         return form;
     }
+    public void getFormQuestions(ArrayList<String> form){
+        System.out.println("Choose an option: ");
+        form.forEach(System.out::println);
 
-    public HashMap<Integer, Runnable> getFormQuestions() {
-        return formQuestions;
     }
+
+
 }

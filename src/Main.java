@@ -13,9 +13,10 @@ import java.util.Scanner;
 public class Main {
     public static void main(String[] args) throws IOException {
         try {
+
             FormReader formReader = new FormReader("formulario.txt");
             ArrayList<String> form = formReader.readForm();
-            form.forEach(System.out::println);
+            formReader.getFormQuestions(form);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -23,8 +24,7 @@ public class Main {
         Scanner scanner = new Scanner(System.in);
         User user = new User();
         RegisterUser registerUser = new RegisterUser(user, scanner);
-        System.out.println("Choose an option ");
-        System.out.println(COLOCA A FUNCAO GETFORMQUESTIONS AQUI);
-
+        registerUser.executeAction(user.getChoice());
+        user.userInfo();
     }
 }

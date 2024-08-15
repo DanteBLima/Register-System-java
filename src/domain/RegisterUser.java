@@ -36,7 +36,8 @@ public class RegisterUser {
         {
             reg.run();
         }
-        System.out.println("Invalid choice.");
+        else System.out.println("Invalid choice.");
+
     }
 
 }

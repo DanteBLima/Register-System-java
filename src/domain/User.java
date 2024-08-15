@@ -1,11 +1,24 @@
 package domain;
 
+import java.util.Scanner;
+
 public class User {
     private String name;
     private String email;
     private int age;
     private float height;
 
+    public int getChoice(){
+        Scanner choice = new Scanner(System.in);
+        return choice.nextInt();
+    }
+
+    public void userInfo(){
+        System.out.println(this.name);
+        System.out.println(this.email);
+        System.out.println(this.age);
+        System.out.println(this.height);
+    }
 
     public String getName() {
         return name;
