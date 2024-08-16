@@ -5,11 +5,48 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Scanner;
 
 
 public class FormReader {
     private String filePath;
-    private HashMap<Integer, Runnable> formQuestions = new HashMap<>();
+    //SE DER ERRO TENTA VOLTAR ESSA LINHAprivate HashMap<Integer, Runnable> formQuestions = new HashMap<>();
+    private HashMap<Integer, Runnable> menu = new HashMap<>();
+
+    public FormReader(){
+
+    }
+
+    public FormReader(User user, Scanner scanner){
+        menu = new HashMap<>();
+        menu.put(1,()->{
+            System.out.println("Registering user");
+            RegisterUser registerUser = new RegisterUser(user, scanner);
+            registerUser.run(user);
+        });
+    }
+
+    public void run(User user){
+        int choice;
+        do {
+            choice = user.getChoice();
+            executeAction(choice);
+            System.out.println("Choose an option: ");
+
+        } while (choice != 0);
+
+    }
+
+    public void executeAction(int choice){
+        Runnable reg = menu.get(choice);
+        if(reg != null)
+        {
+            reg.run();
+        }
+        else System.out.println("Invalid choice.");
+
+    }
+
 
     public FormReader(String filePath) {
         this.filePath = filePath;
@@ -32,8 +69,8 @@ public class FormReader {
     public void getFormQuestions(ArrayList<String> form){
         System.out.println("Choose an option: ");
         form.forEach(System.out::println);
-
     }
+
 
 
 }

@@ -9,15 +9,18 @@ public class User {
     private float height;
 
     public int getChoice(){
-        Scanner choice = new Scanner(System.in);
-        return choice.nextInt();
+        Scanner sc = new Scanner(System.in);
+        return sc.nextInt();
     }
 
-    public void userInfo(){
-        System.out.println(this.name);
-        System.out.println(this.email);
-        System.out.println(this.age);
-        System.out.println(this.height);
+    @Override
+    public String toString() {
+        return "User{" +
+                "name='" + name + '\'' +
+                ", email='" + email + '\'' +
+                ", age=" + age +
+                ", height=" + height +
+                '}';
     }
 
     public String getName() {
