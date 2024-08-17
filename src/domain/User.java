@@ -13,16 +13,6 @@ public class User {
         return sc.nextInt();
     }
 
-    @Override
-    public String toString() {
-        return "User{" +
-                "name='" + name + '\'' +
-                ", email='" + email + '\'' +
-                ", age=" + age +
-                ", height=" + height +
-                '}';
-    }
-
     public String getName() {
         return name;
     }

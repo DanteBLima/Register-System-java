@@ -13,13 +13,18 @@ public class RegisterUser {
     private HashMap<Integer, Runnable> register;
     private User user;
     private Scanner scanner;
-    private static int sequence = 1;
+
 
     public RegisterUser(User user, Scanner scanner) {
         this.user = user;
         this.scanner = scanner;
         register = new HashMap<>();
         AtomicReference<File> userInfo = new AtomicReference<>();
+
+        File directory = new File("users");
+        if(!directory.exists()){
+            directory.mkdir();
+        }
 
         try {
 
@@ -35,7 +40,7 @@ public class RegisterUser {
             System.out.println("Name: ");
             String name = scanner.nextLine();
             user.setName(name);
-            String fileName = sequence + "- " + name.replaceAll("\\s+", "").toUpperCase();
+            String fileName = "users/" + getNextUserNumber(directory) + "-" + user.getName().replaceAll("\\s+", "").toUpperCase();
             userInfo.set(new File(fileName + ".TXT"));
 
             try {
@@ -49,7 +54,7 @@ public class RegisterUser {
                 System.out.println("Something went wrong");
                 e.printStackTrace();
             }
-            sequence++;
+
         });
 
         register.put(2, () -> {
@@ -76,6 +81,11 @@ public class RegisterUser {
             System.out.println("Exitting program");
             System.exit(0);
         });
+    }
+
+    private int getNextUserNumber(File directory) {
+        int userCount = directory.list().length;
+        return userCount + 1;
     }
 
     private void writeToFile(String data, AtomicReference<File> userInfo) {

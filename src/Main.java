@@ -22,6 +22,6 @@ public class Main {
         User user = new User();
         FormReader mainMenu = new FormReader(user, scanner);
         mainMenu.run(user);
-        System.out.println(user.toString());
+        
     }
 }
