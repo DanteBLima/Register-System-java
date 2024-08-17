@@ -13,6 +13,7 @@ public class RegisterUser {
     private HashMap<Integer, Runnable> register;
     private User user;
     private Scanner scanner;
+    private static int sequence = 1;
 
     public RegisterUser(User user, Scanner scanner) {
         this.user = user;
@@ -34,7 +35,7 @@ public class RegisterUser {
             System.out.println("Name: ");
             String name = scanner.nextLine();
             user.setName(name);
-            String fileName = name.replaceAll("\\s+", "").toUpperCase();
+            String fileName = sequence + "- " + name.replaceAll("\\s+", "").toUpperCase();
             userInfo.set(new File(fileName + ".TXT"));
 
             try {
@@ -48,6 +49,7 @@ public class RegisterUser {
                 System.out.println("Something went wrong");
                 e.printStackTrace();
             }
+            sequence++;
         });
 
         register.put(2, () -> {
