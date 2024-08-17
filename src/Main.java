@@ -22,8 +22,6 @@ public class Main {
         User user = new User();
         FormReader mainMenu = new FormReader(user, scanner);
         mainMenu.run(user);
-        //RegisterUser registerUser = new RegisterUser(user, scanner);
-//        registerUser.run(user);
         System.out.println(user.toString());
     }
 }
