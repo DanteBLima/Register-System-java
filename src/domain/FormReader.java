@@ -93,21 +93,35 @@ public class FormReader {
 
     public void addQuestion() {
         Scanner scanner = new Scanner(System.in);
-        System.out.println("What question would u like to add:");
+        System.out.println("What question would you like to add: ");
 
         String newQuestion = scanner.nextLine();
 
-        try (FileWriter fw = new FileWriter("menu principal.txt", true);
-             BufferedWriter bw = new BufferedWriter(fw)) {
+        try {
+            int currentQuestion = 0;
+            try (BufferedReader br = new BufferedReader(new FileReader("menu principal.txt"))) {
+                while (br.readLine() != null) {
+                    currentQuestion++;
+                }
+            }
+            currentQuestion++;
 
-            bw.write(newQuestion);
-            bw.newLine();
-            System.out.println("Question sucessfully added!");
+            String formattedQuestion = currentQuestion + " - " + newQuestion;
+
+            try (FileWriter fw = new FileWriter("menu principal.txt", true);
+                 BufferedWriter bw = new BufferedWriter(fw)) {
+
+                bw.write(formattedQuestion);
+                bw.newLine();
+                System.out.println("Question sucessfully added!");
+
+            }
 
         } catch (IOException e) {
             System.out.println("Error trying to add your question: " + e.getMessage());
         }
     }
+
 
 
 }
