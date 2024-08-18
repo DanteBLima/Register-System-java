@@ -111,6 +111,7 @@ public class FormReader {
             try (FileWriter fw = new FileWriter("menu principal.txt", true);
                  BufferedWriter bw = new BufferedWriter(fw)) {
 
+                bw.newLine();
                 bw.write(formattedQuestion);
                 bw.newLine();
                 System.out.println("Question sucessfully added!");
