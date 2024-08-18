@@ -1,9 +1,6 @@
 package domain;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Scanner;
@@ -11,7 +8,6 @@ import java.util.Scanner;
 
 public class FormReader {
     private String filePath;
-    //SE DER ERRO TENTA VOLTAR ESSA LINHAprivate HashMap<Integer, Runnable> formQuestions = new HashMap<>();
     private HashMap<Integer, Runnable> menu = new HashMap<>();
 
     public FormReader(){
@@ -26,6 +22,7 @@ public class FormReader {
             registerUser.run(user);
         });
         menu.put(2, this::listUsers);
+        menu.put(3, this::addQuestion);
 
     }
 
@@ -93,5 +90,24 @@ public class FormReader {
         }
 
     }
+
+    public void addQuestion() {
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("What question would u like to add:");
+
+        String newQuestion = scanner.nextLine();
+
+        try (FileWriter fw = new FileWriter("menu principal.txt", true);
+             BufferedWriter bw = new BufferedWriter(fw)) {
+
+            bw.write(newQuestion);
+            bw.newLine();
+            System.out.println("Question sucessfully added!");
+
+        } catch (IOException e) {
+            System.out.println("Error trying to add your question: " + e.getMessage());
+        }
+    }
+
 
 }

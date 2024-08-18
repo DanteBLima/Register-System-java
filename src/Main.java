@@ -17,11 +17,10 @@ public class Main {
             e.printStackTrace();
         }
 
-
         Scanner scanner = new Scanner(System.in);
         User user = new User();
         FormReader mainMenu = new FormReader(user, scanner);
         mainMenu.run(user);
-        
+
     }
 }
