@@ -1,4 +1,4 @@
-1- Cadastrar usuário
+1 - Cadastrar o usuário
 2 - Listar todos usuários cadastrados
 3 - Cadastrar nova pergunta no formulário
 4 - Deletar pergunta do formulário

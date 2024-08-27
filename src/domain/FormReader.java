@@ -3,6 +3,7 @@ package domain;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Scanner;
 
 
@@ -23,7 +24,7 @@ public class FormReader {
         });
         menu.put(2, this::listUsers);
         menu.put(3, this::addQuestion);
-
+        menu.put(4, this::deleteQuestion);
     }
 
     public void run(User user){
@@ -123,6 +124,45 @@ public class FormReader {
         }
     }
 
+    public void deleteQuestion() {
+        Scanner sc = new Scanner(System.in);
+        System.out.println("What question would you like to delete?");
+        int question = sc.nextInt();
 
+        if (question < 5) {
+            System.out.println("Invalid choice, can only delete question 5 and above.");
+            return;
+        }
+
+        List<String> menu = new ArrayList<>();
+        String filepath = "menu principal.txt";
+
+        try (BufferedReader br = new BufferedReader(new FileReader(filepath))) {
+            String line;
+            while ((line = br.readLine()) != null) {
+                menu.add(line);
+            }
+        } catch (IOException e) {
+            throw new RuntimeException("Error reading file: " + e.getMessage());
+        }
+
+        if (question > 0 && question <= menu.size()) {
+            menu.remove(question - 1);
+        } else {
+            System.out.println("Invalid choice, something went wrong.");
+            return;
+        }
+        
+        try (BufferedWriter bw = new BufferedWriter(new FileWriter(filepath))) {
+            for (String s : menu) {
+                bw.write(s);
+                bw.newLine();
+            }
+        } catch (IOException e) {
+            throw new RuntimeException("Error writing file: " + e.getMessage());
+        }
+
+        System.out.println("Question successfully deleted!");
+    }
 
 }
