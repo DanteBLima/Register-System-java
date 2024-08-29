@@ -78,6 +78,7 @@ public class RegisterUser {
         });
 
         register.put(0, () -> {
+
             System.out.println("Exitting program");
             System.exit(0);
         });

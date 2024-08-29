@@ -25,6 +25,7 @@ public class FormReader {
         menu.put(2, this::listUsers);
         menu.put(3, this::addQuestion);
         menu.put(4, this::deleteQuestion);
+        menu.put(5, this::searchUser);
     }
 
     public void run(User user){
@@ -164,5 +165,48 @@ public class FormReader {
 
         System.out.println("Question successfully deleted!");
     }
+
+    public void searchUser(){
+        Scanner sc = new Scanner(System.in);
+        System.out.println("Which user would you like to search?");
+        String user = sc.nextLine();
+        File users = new File("users");
+        List<String> availableUsers = new ArrayList<>();
+
+        if(users.exists() && users.isDirectory()){
+            File[] archives = users.listFiles();
+
+            if (archives != null){
+                for (File archive : archives) {
+                    try {
+                        BufferedReader br = new BufferedReader(new FileReader(archive));
+                        String line;
+                        while ((line = br.readLine()) != null){
+                            if(line.startsWith("Name: ")){
+                                String fullName = line.substring(6).trim();
+                                String firstName = fullName.split(" ")[0];
+                                if(firstName.toLowerCase().contains(user.toLowerCase())) {
+                                    availableUsers.add(fullName);
+                                }
+
+                            }
+                        }
+                    } catch (FileNotFoundException e) {
+                        System.out.println("Error reading file: "+archive.getName());
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
+
+                }
+            }
+        }else {
+            System.out.println("Directory users not found");
+        }
+
+        if(!availableUsers.isEmpty()){
+            System.out.println("Cadastrados: "+ String.join(", ",availableUsers));
+        }else System.out.println("No users '"+user + "' found");
+    }
+
 
 }
