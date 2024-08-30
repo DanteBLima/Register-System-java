@@ -39,6 +39,12 @@ public class RegisterUser {
         register.put(1, () -> {
             System.out.println("Name: ");
             String name = scanner.nextLine();
+            if(name.length() < 10){
+                do{
+                    System.out.println("Error, name must have at least 10 characters.");
+                    name = scanner.nextLine();
+                }while (name.length() < 10);
+            }
             user.setName(name);
             String fileName = "users/" + getNextUserNumber(directory) + "-" + user.getName().replaceAll("\\s+", "").toUpperCase();
             userInfo.set(new File(fileName + ".TXT"));
