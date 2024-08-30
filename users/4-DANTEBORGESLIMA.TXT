@@ -1,4 +1,0 @@
-Name: Dante Borges Lima
-Email: dante.borges@email.com
-Age: 19
-Height: 161.0
