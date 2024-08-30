@@ -1,13 +1,12 @@
 package domain;
 
+import java.io.*;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Scanner;
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
 import java.util.concurrent.atomic.AtomicReference;
+import java.util.regex.Pattern;
 
 public class RegisterUser {
     private HashMap<Integer, Runnable> register;
@@ -65,21 +64,76 @@ public class RegisterUser {
 
         register.put(2, () -> {
             System.out.println("Email: ");
-            user.setEmail(scanner.nextLine());
+            String email = scanner.nextLine();
+            String regexPattern = "^(.+)@(\\S+)$";
+            if(!Pattern.compile(regexPattern).matcher(email).matches()){
+                do {
+                    System.out.println("Error, email address must contain '@'");
+                    System.out.println("Email:");
+                    email = scanner.nextLine();
+                }while(!Pattern.compile(regexPattern).matcher(email).matches());
+            }
+            File users = new File("users");
+            if(users.exists() && users.isDirectory()){
+                File[] archives = users.listFiles();
+
+                if(archives != null){
+                    for (File archive : archives) {
+                        try {
+                            BufferedReader br = new BufferedReader(new FileReader(archive));
+                            String line;
+                            while ((line = br.readLine()) != null){
+                                if(line.startsWith("Email: ") && line.substring(7).equalsIgnoreCase(email.trim())){
+                                    System.out.println("Error, this email already exists");
+                                    return;
+                                }
+                            }
+                        } catch (FileNotFoundException e) {
+                            throw new RuntimeException(e);
+                        } catch (IOException e) {
+                            throw new RuntimeException(e);
+                        }
+
+                    }
+                }
+            }
+
+            user.setEmail(email);
             writeToFile("Email: " + user.getEmail(),userInfo);
         });
 
         register.put(3, () -> {
             System.out.println("Age: ");
-            user.setAge(scanner.nextInt());
+            int age = scanner.nextInt();
+            if(age <= 18){
+                do {
+                    System.out.println("You must be above 18 to register");
+                    System.out.println("Age:");
+                    age = scanner.nextInt();
+                }while (age <= 18);
+            }
+            user.setAge(age);
             scanner.nextLine();
             writeToFile("Age: " + user.getAge(),userInfo);
         });
 
         register.put(4, () -> {
-            System.out.println("Height: ");
-            user.setHeight(scanner.nextFloat());
-            scanner.nextLine();
+
+            float height = 0;
+            boolean check = false;
+            while(!check){
+                System.out.println("Height: ");
+                String h = scanner.nextLine();
+                if (h.matches("\\d+,\\d+")){
+                    h = h.replace(",",".");
+                    height = Float.parseFloat(h);
+                    check = true;
+                }else{
+                    System.out.println("Error, use a ',' instead of a '.'");
+                }
+
+            }
+            user.setHeight(height);
             writeToFile("Height: " + user.getHeight(),userInfo);
         });
 
